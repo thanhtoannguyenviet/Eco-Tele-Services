@@ -15,15 +15,11 @@ namespace Server.Controllers
     {
         private AccountDAO accountDao = new AccountDAO();
         [HttpPost]
-        [Route("Post")]
+        [Route("checkLogin")]
         public IHttpActionResult Post([FromBody]Account account)
         {
            var action =accountDao.Login(account.userName,account.pass_word);
-            if (action != null)
-            {
-                return Ok();
-            }
-            return NotFound();
+           return Ok(action);
         }
         [HttpPost]
         [Route("Staff/Registe")]
@@ -81,9 +77,9 @@ namespace Server.Controllers
         public IHttpActionResult UpdateInfoCustomer([FromBody]AccountStaff accountStaff)
         {
             var action = accountDao.UpdateInformation(accountStaff);
-            if (!action)
+            if (action!=null)
             {
-                return Ok();
+                return Ok(accountStaff);
             }
             return BadRequest();
         }

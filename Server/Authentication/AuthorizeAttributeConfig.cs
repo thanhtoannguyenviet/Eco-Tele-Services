@@ -20,45 +20,46 @@ namespace Server.Authentication
         const string BAuthResponseHeaderValue = "Basic";
         private AccountDTO ParseAuthorizationHeader(string authHeader)
         {
-            string[] credentials = Encoding.ASCII.GetString(Convert.FromBase64String(authHeader)).Split(new[] { ':' });
-            if (credentials.Length != 2 || string.IsNullOrEmpty(credentials[0]) || string.IsNullOrEmpty(credentials[1]))
-                return null;
-            AccountDAO accountDao =new AccountDAO();
-            AccountDTO account = accountDao.Login(credentials[0],credentials[1]);
-            return account;
+            // string[] credentials = Encoding.ASCII.GetString(Convert.FromBase64String(authHeader)).Split(new[] { ':' });
+            // if (credentials.Length != 2 || string.IsNullOrEmpty(credentials[0]) || string.IsNullOrEmpty(credentials[1]))
+            //     return null;
+            // AccountDAO accountDao =new AccountDAO();
+            // AccountDTO account = accountDao.Login(credentials[0],credentials[1]);
+            // return account;
+            return null;
         }
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            try
-            {
-                AuthenticationHeaderValue authValue = actionContext.Request.Headers.Authorization;
-                if (authValue != null && !String.IsNullOrWhiteSpace(authValue.Parameter)
-                   && authValue.Scheme == BAuthResponseHeaderValue)
-                {
-                    AccountDTO account = ParseAuthorizationHeader(authValue.Parameter);
-                    var myPrincipal = new MyPrincipal(account.Username);
-                    if (!myPrincipal.IsInRole(Roles))
-                    {
-                        actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
-                        actionContext.Response.Headers.Add(BAuthResponseHeader, BAuthResponseHeaderValue);
-                        return;
-                    }
-                }
-                else
-                {
-                        actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
-                        actionContext.Response.Headers.Add(BAuthResponseHeader, BAuthResponseHeaderValue);
-                        return;
-
-                }
-                
-            }
-            catch (Exception e)
-            {
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
-                actionContext.Response.Headers.Add(BAuthResponseHeader, BAuthResponseHeaderValue);
-                return;
-            }
+            // try
+            // {
+            //     AuthenticationHeaderValue authValue = actionContext.Request.Headers.Authorization;
+            //     if (authValue != null && !String.IsNullOrWhiteSpace(authValue.Parameter)
+            //        && authValue.Scheme == BAuthResponseHeaderValue)
+            //     {
+            //         AccountDTO account = ParseAuthorizationHeader(authValue.Parameter);
+            //         var myPrincipal = new MyPrincipal(account.Username);
+            //         if (!myPrincipal.IsInRole(Roles))
+            //         {
+            //             actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+            //             actionContext.Response.Headers.Add(BAuthResponseHeader, BAuthResponseHeaderValue);
+            //             return;
+            //         }
+            //     }
+            //     else
+            //     {
+            //             actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+            //             actionContext.Response.Headers.Add(BAuthResponseHeader, BAuthResponseHeaderValue);
+            //             return;
+            //
+            //     }
+            //     
+            // }
+            // catch (Exception e)
+            // {
+            //     actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+            //     actionContext.Response.Headers.Add(BAuthResponseHeader, BAuthResponseHeaderValue);
+            //     return;
+            // }
         }
     }
 }

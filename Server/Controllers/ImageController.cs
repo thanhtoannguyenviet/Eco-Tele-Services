@@ -10,6 +10,7 @@ using Server.Models.Entity;
 
 namespace Server.Controllers
 {
+    [RoutePrefix("api/Image")]
     public class ImageController : ApiController
     {
         ImageDAO imageDao = new ImageDAO();

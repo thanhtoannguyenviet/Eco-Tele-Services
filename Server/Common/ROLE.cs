@@ -16,10 +16,7 @@ namespace Server.Common
             {20,"NhanVien"},
             {1,"Customer" }
         };
-        public ROLE()
-        {
-            ROLE_ = ROLE_;
-        }
+        
         public static string GetValue(int? TKey)
         {
             return ROLE_.FirstOrDefault(x => x.Key == TKey).Value;

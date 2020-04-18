@@ -1,0 +1,88 @@
+﻿@using Client.Models.DTO
+
+@{
+    var info = ViewBag.Staff as AccountStaff;
+    ViewBag.Title = Layout;
+}
+
+<div class="container">
+    <div class="m-3">
+        <div class="row container">
+            <div class="card m-1 col-3 mx-auto">
+                <div class="card-body">
+                    <h4 class="card-title text-center"> <i class="fa  fa-bar-chart m-auto "> </i>Total Money:</h4>
+                    <p class="card-text text-center">@ViewBag.TotalMoney</p>
+                </div>
+            </div>
+            <a class="card m-1 col-3 btn btn-danger bg-danger mx-auto" href="https://mail.google.com/mail/u/0/">
+                <div class="card-body ">
+                    <h4 class="card-title text-center">  <i class="fa fa-inbox m-2 "> </i>Gmail:</h4>
+                </div>
+            </a>
+            <div class="card m-1 col-3 btn btn-success bg-success mx-auto">
+                <div class="card-body">
+                    <h4 class="card-title text-center">  <i class="fa fa-file-excel-o  m-auto "> </i>Excel:</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row container-fluid ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr class="table-primary">
+                        <th>No.</th>
+                        <th style="width:20%">Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Earn</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.Model)
+                    {
+                        <tr>
+                            <td>@item.details.id</td>
+                            <td>@item.customer.headName</td>
+                            <td>@item.customer.headPhone</td>
+                            <td>@item.customer.headEmail</td>
+                            <td>@String.Format("{0:d}", item.details.startDate)</td>
+                            <td>@String.Format("{0:d}", item.details.endDate)</td>
+                            <td>@item.details.amountMoney</td>
+                            @if (item.details.statusOrder == 0)
+                            {
+                                <td>
+                                    @Ajax.ActionLink("Accept", "AcceptReplyCustomer", "Admin", new { detail = item.details.id }, new AjaxOptions
+                                    {
+                                        HttpMethod = "GET",
+                                        InsertionMode = InsertionMode.Replace,
+                                        UpdateTargetId = "Content"
+                                    })
+                                    @Ajax.ActionLink("Deny", "DenyReplyCustomer", "Admin", new { detail = item.details.id }, new AjaxOptions
+                                    {
+                                        HttpMethod = "GET",
+                                        InsertionMode = InsertionMode.Replace,
+                                        UpdateTargetId = "Content"
+                                    })
+                                </td>
+                            }
+                            else if (item.details.statusOrder == 1)
+                            {
+                                <td>
+                                    <a href="#" class="disabled" tabindex="-1" role="button" aria-disabled="true">Accepted</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <a href="#" class="disabled" tabindex="-1" role="button" aria-disabled="true">Denied</a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

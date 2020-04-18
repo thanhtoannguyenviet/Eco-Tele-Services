@@ -1,0 +1,143 @@
+﻿@using Client.Controllers
+
+@{
+    var res= Request.Cookies["Account"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+@if (res==null) { 
+    <nav class="navbar fixed-top navbar-light bg-light ">
+        @Html.ActionLink("Excell-On Service", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
+        <form class="form-inline my-2 my-lg-0">
+            <a onclick="signin()">
+                <button type="button" class="btn btn-outline-primary">
+                    Đăng nhập
+                </button>
+            </a>
+            <a onclick="resigter()" class="p-2">
+                <button type="button" class="btn btn-outline-primary">
+                    Đăng ký
+                </button>
+            </a>
+        </form>
+    </nav>
+}
+<div id="signin">
+    <div class="animate card text-center container col-4 none-padding ">
+        <div class="card-header">
+            Login
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="document.getElementById('signin').style.display = 'none'">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div >
+            @using (Html.BeginForm("Login", "Home", FormMethod.Post, new {@class = "card-body"}))
+            {
+                <div class=" container">
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                    <div class=" form-row underline-box ">
+                        <label for="UserAccount" class="col-2 "><span class="text-center"><i class="fa fa-user fa-2x "></i></span></label>
+                        <input type="text" class=" col-9 input-text-none" name="UserAccount" id="UserAccount" aria-describedby="emailHelp" placeholder="Username">
+                    </div>
+                    <br/>
+                    <div class=" form-row underline-box ">
+                        <label for="PasswordAccount" class="col-2"><i class="fa fa-lock fa-2x"></i></label>
+                        <input type="password" class="col-9 input-text-none" name="PasswordAccount" id="PasswordAccount" placeholder="Password">
+                    </div>
+                    <div class="form-row container py-3">
+                        <button type="submit" value="Log In" class="btn btn-primary btn-lg btn-block">Đăng nhập</button>
+                    </div>
+                </div>
+            }
+            <div class="res">
+                <p>
+                    Don't have an account?<a onclick="document.getElementById('signin').style.display = 'none';resigter();"><strong>Resigter now</strong></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="resigter">
+    <div id="tablesign" class="animate">
+        <div id="tablereg">
+            <div id="smalltablereg">Register <span onclick="document.getElementById('resigter').style.display = 'none'" class="close" title="Exit">&times;</span></div>
+        </div>
+        <div id="smalltablesign">
+            @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+            {
+
+                <div class="form-group">
+                    <label for="Fullname">Full name</label>
+                    <input type="text" class="form-control" name="Fullname" id="Fullname" aria-describedby="emailHelp" placeholder="Enter fullname">
+                </div>
+                <div class="form-group">
+                    <label for="Email">Email address</label>
+                    <input type="email" class="form-control" name="Email" id="Email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="Username">Username:</label>
+                    <input type="text" class="form-control" name="Username" id="Username" placeholder="Enter Username">
+                </div>
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <input type="password" class="form-control" name="Password" id="Password" placeholder="Enter password">
+                </div>
+                <div class="form-group">
+                    <label for="Confpassword">Confirm Password</label>
+                    <input type="password" class="form-control" name="Confpassword" id="Confpassword" placeholder="Enter password" onkeypress="CheckInfo(this, 'Confpassword')">
+                </div>
+
+                <div class="form-group">
+                    <label for="Phone">Phone:</label>
+                    <input type="text" class="form-control" name="Phone" id="Phone" pattern="^([0-9])" placeholder="Enter password again" onkeypress="CheckInfo(this, 'phone')">
+                </div>
+
+                <div class="form-group">
+                    <label for="Birthday">Birthday:</label>
+                    <input type="text" class="form-control" name="Birthday" id="Birthday" placeholder="Enter password again">
+                </div>
+
+                <div class="form-group">
+                    <label for="taxCode">Tax Code:</label>
+                    <input type="text" class="form-control" name="taxCode" id="taxCode" placeholder="Enter Tax Code">
+                </div>
+                <input type="submit" value="Registe" class="btn btn-default"/>
+            }
+        </div>
+    </div></div>
+<div class="navbar  bg-dark text-light ">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" id="navbarToggleExternalContent">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    @RenderBody()
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryval")
+@RenderSection("scripts", required: false)
+</body>
+</html>

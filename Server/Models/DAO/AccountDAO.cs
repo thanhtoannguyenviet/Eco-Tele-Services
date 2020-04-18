@@ -37,15 +37,12 @@ namespace Server.Models.DAO
                     new AccountDTO() {Password = a.pass_word, Username = a.userName, Roles = ROLE.GetValue(a.role_)});
             return objects.SingleOrDefault();
          }
-        public AccountDTO Login(string username,string password)
+        public Account Login(string username,string password)
         {
-            var objects = entities.Accounts
+
+            return entities.Accounts
                 .FirstOrDefault(a => a.userName.Equals(username)&&a.pass_word.Equals(password));
-            AccountDTO account = new AccountDTO();
-            account.Username=objects.userName;
-            account.Password=objects.pass_word;
-            account.Roles=ROLE.GetValue(objects.role_);
-            return account;
+            
         }
         public String CheckLogin(string username, string password)
         {
@@ -164,22 +161,22 @@ namespace Server.Models.DAO
                 return false;
             }
         }
-        public bool UpdateInformation(AccountStaff accountStaff)
+        public AccountStaff UpdateInformation(AccountStaff accountStaff)
         {
             try
             {
                 entities.Entry(accountStaff.account).State = EntityState.Modified;
                 entities.SaveChanges();
                 accountStaff.staff.id = accountStaff.account.id;
-                entities.Entry(accountStaff.account).State = EntityState.Modified;
+                entities.Entry(accountStaff.staff).State = EntityState.Modified;
                 entities.SaveChanges();
-                return true;
+                return accountStaff;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 accountStaff.messsage = e.Message;
-                return false;
+                return null;
             }
         }
     }

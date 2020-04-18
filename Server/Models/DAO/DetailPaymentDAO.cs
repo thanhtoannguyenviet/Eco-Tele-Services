@@ -17,17 +17,12 @@ namespace Server.Models.DAO
             {
                 entities.Payments.Add(detailPayment.payment);
                 entities.SaveChanges();
-                foreach (var item in detailPayment.details)
-                {
-                    item.paymentId = detailPayment.payment.id;
-                    entities.Details.Add(item);
-                    entities.SaveChanges();
-                }
+                entities.Details.Add(detailPayment.details);
+                entities.SaveChanges();
                 return true;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
                 return false;
             }
         }
@@ -35,6 +30,10 @@ namespace Server.Models.DAO
         {
             entities.Entry(detail).State=EntityState.Modified;
             entities.SaveChanges();
+        }
+        public Detail GetDetailFromStaff(int staffid)
+        {
+            return entities.Details.Where(d=>d.staffId==staffid).FirstOrDefault();
         }
     }
 }

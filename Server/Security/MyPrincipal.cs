@@ -11,7 +11,6 @@ namespace Server.Security
     public class MyPrincipal:IPrincipal
     {
         private AccountDTO account;
-        private AccountDAO accountDao;
         public bool IsInRole(string role)
         {
             return  account.Roles!=null?true : false;
@@ -21,7 +20,8 @@ namespace Server.Security
         public MyPrincipal(string username)
         {
             this.Identity = new GenericIdentity(username);
-            this.account = accountDao.Find(username);
+
+            this.account = new AccountDAO().Find(username);
         }
     }
 }

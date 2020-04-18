@@ -14,13 +14,13 @@ namespace Server.Controllers
         private CustomerDAO customerDao = new CustomerDAO();
         [HttpGet]
         [Route("getAllDetail/{id}/{page}")]
-        public IHttpActionResult getAllOrder(int id,int page)
+        public IHttpActionResult GetAllDetail(int id,int page)
         {
             return    Ok(customerDao.GetAllDetailsHasPaging(id,page));
         }
         [HttpGet]
         [Route("countAllDetail/{id}")]
-        public IHttpActionResult countOrder(int id)
+        public IHttpActionResult CountDetail(int id)
         {
             return Ok(customerDao.CountDetails(id));
         }
@@ -48,12 +48,5 @@ namespace Server.Controllers
         {
             return Ok(customerDao.CountStaff(id));
         }
-        [HttpGet]
-        [Route("detailstaff/{id}")]
-        public IHttpActionResult DetailStaff(int id)
-        {
-            return Ok();
-        }
-
     }
 }

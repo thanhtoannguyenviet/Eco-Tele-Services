@@ -26,9 +26,32 @@ namespace Server.Controllers
         [Route("updateService/")]
         public IHttpActionResult updateService([FromBody] Service_ service)
         {
-            serviceDao.updateService(service);
+            serviceDao.removeService(service);
             return Ok();
         }
+        [HttpGet]
+        [Route("findWithRole/{role}")]
+        public IHttpActionResult findWithRole(int role)
+        {
+            if (role < 20)
+            {
+                return BadRequest(ModelState);
+            }
 
+            try
+            {
+                return Ok(serviceDao.findWithRole(role));
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
+        }
+        [HttpGet]
+        [Route("getServiceWithStaffId/{id}")]
+        public IHttpActionResult getServiceOfStaff(int id)
+        {
+            return Ok(serviceDao.GetServiceOfStaff(id));
+        }
     }
 }

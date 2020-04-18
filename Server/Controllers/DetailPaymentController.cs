@@ -27,5 +27,6 @@ namespace Server.Controllers
             detailPaymentDao.UpdateDetailStaff(detail);
             return Ok();
         }
+       
     }
 }

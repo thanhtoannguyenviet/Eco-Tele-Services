@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Client.Models.DTO.AccountStaff>
+<div class="container">
+    <h1>Staff</h1>
+    <div class="form-inline mt-2 mt-md-0">
+       
+        @using(Ajax.BeginForm("Search","Admin",new AjaxOptions{UpdateTargetId = "table",HttpMethod = "POST",InsertionMode = InsertionMode.Replace})) {
+        @Html.TextBox("txtSearch","",new{ @class="form-control col-4",@placeholder="Search",@type="text",@id="txt"})
+        }
+        <a href="@Url.Action("NewAccount", "Admin")" type="button" class="btn btn-primary"> <i class="fa fa-plus"></i> Add new</a>
+    </div>
+    <script type="text/javascript">
+        $('#txt').keyup(function () {
+                $(function () {
+                    setTimeout(function () {
+                        $('form').submit();
+                    }, 1000);
+                });
+            });
+        
+    </script>
+    <div class="table-responsive" id="table">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Name Staff</th>
+                    <th>Phone number</th>
+                    <th>Email</th>
+                    <th>Birthday</th>
+                    <th>Mistake</th>
+                    <th>Bank Card ID</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody class="accordion" id="accordionExample">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.staff.id</td>
+                        <td>@item.staff.staffName</td>
+                        <td>@item.staff.staffPhone</td>
+                        <td>@item.staff.staffEmail</td>
+                        <td>@item.staff.staffBirtday</td>
+                        <td>@item.staff.mistakeCount</td>
+                        <td>@item.staff.bankCard</td>
+                        <td>
+                            @Ajax.ActionLink("BAN", "BanAccount", new { id = item.staff.id }, new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "Content"
+                            })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>   
+</div>
