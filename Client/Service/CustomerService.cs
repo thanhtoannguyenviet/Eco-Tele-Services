@@ -18,7 +18,7 @@ namespace Client.Service
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44305/api/customer/getAllDetail/" + customer.id + "/" + pageNumber);
+                client.BaseAddress = new Uri("https://localhost:44305/api/customer/getAllDetail/" + customer.id + "/" + pageNumber);
 
                 var responseTask = client.GetAsync(client.BaseAddress);
                 responseTask.Wait();
@@ -37,7 +37,7 @@ namespace Client.Service
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44305/api/customer/countAllDetail/" + customer.id);
+                client.BaseAddress = new Uri("https://localhost:44305/api/customer/countAllDetail/" + customer.id);
 
                 var responseTask = client.GetAsync(client.BaseAddress);
                 responseTask.Wait();
@@ -54,8 +54,9 @@ namespace Client.Service
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44305/api/customer/getAllPayment/" + customer.id + "/" + pageNumber);
+                client.BaseAddress = new Uri("https://localhost:44305/api/customer/getAllPayment/" + customer.id + "/" + pageNumber);
                 var responseTask = client.GetAsync(client.BaseAddress);
+
                 responseTask.Wait();
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
@@ -71,7 +72,7 @@ namespace Client.Service
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44305/api/customer/countAllPayment/" + customer.id);
+                client.BaseAddress = new Uri("https://localhost:44305/api/customer/countAllPayment/" + customer.id);
 
                 var responseTask = client.GetAsync(client.BaseAddress);
                 responseTask.Wait();
@@ -87,7 +88,7 @@ namespace Client.Service
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44305/api/customer/getAllStaff/"+customer.id+"/"+pageNumber);
+                client.BaseAddress = new Uri("https://localhost:44305/api/customer/getAllStaff/"+customer.id+"/"+pageNumber);
                 var responseTask = client.GetAsync(client.BaseAddress);
                 responseTask.Wait();
                 var result= responseTask.Result;
@@ -103,7 +104,7 @@ namespace Client.Service
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:44305/api/customer/countAllStaff/" + customer.id);
+                client.BaseAddress = new Uri("https://localhost:44305/api/customer/countAllStaff/" + customer.id);
 
                 var responseTask = client.GetAsync(client.BaseAddress);
                 responseTask.Wait();
@@ -120,12 +121,13 @@ namespace Client.Service
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Clear();
-                var response = client.PostAsync("http://localhost:44305/api/account/Staff/UpdateInformation", new StringContent(
+                var response = client.PostAsync("https://localhost:44305/api/account/Staff/UpdateInformation", new StringContent(
                     new JavaScriptSerializer().Serialize(accountCustomer), Encoding.UTF8, "application/json")).Result;
                 if (response.StatusCode == HttpStatusCode.OK)
                     return accountCustomer;
             }
             return null;
         }
+        public static List<Service_> GetServiceByIdStaff(int id) => StaffService.GetServiceOfStaff(id);
     }
 }

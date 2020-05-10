@@ -1,0 +1,41 @@
+﻿
+@using Client.Models
+@using Client.Models.DB
+@using Client.Models.DTO
+@using Newtonsoft.Json
+@{
+    var info = JsonConvert.DeserializeObject<AccountCustomer>(Request.Cookies["Account"]?.Value);
+    var numCart=0;
+    if (Session["cart"] != null)
+    {
+        var cart = Session["Cart"] as List<Detail>;
+        numCart=cart.Count;
+    }
+}
+
+<nav class="col-md-2 d-none sticky-top d-md-block bg-light border-nav" style="height: 572px">
+    <div class="text-center">
+        <img src="@info.img.path_" class=" img-fluid" alt="..." style="padding: 30px 0px 0px 10px;">
+        <h4>@info.customer.headName </h4>
+    </div>
+    <ul class="nav flex-column">
+        <li class="nav-item ">
+            <a class="nav-link text-center @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "text-primary" : "")" href="@Url.Action("Index","Customer")"><i class="fa fa-users fa-fw"></i> Overview</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-center @(ViewContext.RouteData.Values["Action"].ToString() == "SettingView" ? "text-primary" : "")" href="@Url.Action("SettingView","Customer")"><i class="fa fa-cog fa-fw"></i> Settings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-center @(ViewContext.RouteData.Values["Action"].ToString() == "History" ? "text-primary" : "")" href="@Url.Action("History","Customer")"><i class="fa fa-users fa-fw"></i> History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-center @(ViewContext.RouteData.Values["Action"].ToString() == "Payment" ? "text-primary" : "")" href="@Url.Action("Payment","Customer")"><i class="fa fa-shopping-cart fa-fw"></i>Cart  @if(numCart != 0)
+            {
+                @numCart;
+            }</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-center" href="@Url.Action("LogOut","Home")"><i class="fa fa-power-off"></i> Log out</a>
+        </li>
+    </ul>
+</nav>

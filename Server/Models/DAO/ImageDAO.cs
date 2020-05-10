@@ -43,5 +43,9 @@ namespace Server.Models.DAO
                 return false;
             }
         }
+        public List<Img> GetImg (int entryid)
+        {
+            return entities.Imgs.Where(e=>e.entryId==entryid).ToList();
+        }
     }
 }

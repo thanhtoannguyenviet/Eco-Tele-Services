@@ -16,7 +16,7 @@ namespace Server.Controllers
         ImageDAO imageDao = new ImageDAO();
         [HttpPut]
         [Route("addImg/")]
-        public IHttpActionResult addImg([FromBody] AccountStaff accountStaff)
+        public IHttpActionResult AddImg([FromBody] AccountStaff accountStaff)
         {
             bool flag =imageDao.AddImgsStaff(accountStaff);
             if(flag ==true)
@@ -25,12 +25,18 @@ namespace Server.Controllers
         }
         [HttpPut]
         [Route("updateImg/")]
-        public IHttpActionResult updateImg([FromBody] Img img)
+        public IHttpActionResult UpdateImg([FromBody] Img img)
         {
             bool flag = imageDao.UploadImg(img);
             if(flag==true)
                 return Ok();
             else return NotFound();
         }
+        [HttpGet]
+        [Route("getImageById/{entryid}")]
+        public IHttpActionResult GetImgList(int entryid)
+        {
+            return Ok(imageDao.GetImg(entryid));
         }
+    }
 }

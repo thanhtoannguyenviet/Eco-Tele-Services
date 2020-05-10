@@ -1,0 +1,14 @@
+﻿<div class="container">
+    @using (Html.BeginForm("YoutubeTask","Home",FormMethod.Post, new { enctype ="multipart/form-data"}))
+    {
+        <div class="form-group">
+            <label> Upload Video File </label>
+            <div class="input-group">
+                @Html.TextBox("videofile", " ", new { type ="file"}) <br />
+                <input type="submit" value=" Upload Video Files"/>  
+               
+
+            </div>
+        </div>
+    }
+</div>

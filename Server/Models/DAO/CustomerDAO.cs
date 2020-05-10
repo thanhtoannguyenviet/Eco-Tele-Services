@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using PagedList;
 using Server.Common;
+using Server.Models.DTO;
 using Server.Models.Entity;
 
 namespace Server.Models.DAO
@@ -40,7 +41,7 @@ namespace Server.Models.DAO
                 )
                 .Select(
                     temp1 =>
-                        new Detail
+                        new 
                         {
                             id = temp1.d.id,
                             staffId = temp1.d.staffId,
@@ -52,7 +53,23 @@ namespace Server.Models.DAO
                             paymentId = temp1.d.paymentId
                         }
                 );
-           return q.ToList();
+           List<Detail> ls = new List<Detail>();
+           foreach(var item in q)
+           {
+               var detail = new Detail()
+               {
+                   id = item.id,
+                   staffId = item.staffId,
+                   startDate = item.startDate,
+                   endDate = item.endDate,
+                   amountMoney = item.amountMoney,
+                   statusOrder = item.statusOrder,
+                   createDate = item.createDate,
+                   paymentId = item.paymentId
+               };
+                   ls.Add(detail);
+           }
+           return ls;
         }
         private List<Payment> GetAllPayment(int id)
         {
@@ -83,7 +100,7 @@ namespace Server.Models.DAO
                 )
                 .Select(
                     temp1 =>
-                        new Payment
+                        new 
                         {
                             id = temp1.temp0.p.id,
                             paymentId = temp1.temp0.p.paymentId,
@@ -92,70 +109,106 @@ namespace Server.Models.DAO
                             totalMoney = temp1.temp0.p.totalMoney
                         }
                 );
-            return q.ToList();
-        } 
+            List<Payment> ls = new List<Payment>();
+            foreach (var item in q)
+            {
+                var payment = new Payment()
+                {
+                    id = item.id,
+                    paymentId = item.paymentId,
+                    createDate = item.createDate,
+                    customerId = item.customerId,
+                    totalMoney = item.totalMoney
+                };
+                ls.Add(payment);
+            }
+            return ls;
+        }
+        // private List<Staff> GetAllStaff(int id)
+        // {
+        //     var q =
+        //     entities.Details
+        //         .SelectMany(
+        //             d => entities.Customers,
+        //             (d, c) =>
+        //                 new
+        //                 {
+        //                     d = d,
+        //                     c = c
+        //                 }
+        //         )
+        //         .SelectMany(
+        //             temp0 => entities.Payments,
+        //             (temp0, p) =>
+        //                 new
+        //                 {
+        //                     temp0 = temp0,
+        //                     p = p
+        //                 }
+        //         )
+        //         .SelectMany(
+        //             temp1 => entities.Staffs,
+        //             (temp1, s) =>
+        //                 new
+        //                 {
+        //                     temp1 = temp1,
+        //                     s = s
+        //                 }
+        //         )
+        //         .Where(
+        //             temp2 =>
+        //                 ((((Int32?)(temp2.s.id) == temp2.temp1.temp0.d.staffId) &&
+        //                   (temp2.temp1.temp0.d.paymentId == (Int32?)(temp2.temp1.p.id))
+        //                  ) &&
+        //                  (temp2.temp1.p.customerId == (Int32?)(temp2.temp1.temp0.c.id))
+        //                  && (temp2.temp1.p.customerId== id
+        //                      &&temp2.s.department.Equals("Staff"))
+        //                 )
+        //         )
+        //         .Select(
+        //             temp2 =>
+        //                 new 
+        //                 {
+        //                     id = temp2.s.id,
+        //                     staffEmail = temp2.s.staffEmail,
+        //                     staffPhone = temp2.s.staffPhone,
+        //                     staffName = temp2.s.staffName,
+        //                     staffBirtday = temp2.s.staffBirtday,
+        //                     department = temp2.s.department,
+        //                     mistakeCount = temp2.s.mistakeCount,
+        //                     bankCard = temp2.s.bankCard,
+        //                     status_ = temp2.s.status_,
+        //                 }
+        //         )
+        //         .Distinct();
+        //     List<Staff> ls = new List<Staff>();
+        //     foreach (var item in q)
+        //     {
+        //         var staff = new Staff
+        //         {
+        //             id = item.id,
+        //             staffEmail = item.staffEmail,
+        //             staffBirtday = item.staffBirtday,
+        //             staffName = item.staffName,
+        //             staffPhone = item.staffPhone,
+        //             status_ = item.status_,
+        //             department = item.department,
+        //             bankCard = item.bankCard,
+        //             mistakeCount = item.mistakeCount
+        //         };   
+        //       
+        //         ls.Add(staff);
+        //     }
+        //     return ls;
+        // }
         private List<Staff> GetAllStaff(int id)
         {
-            var q =
-            entities.Details
-                .SelectMany(
-                    d => entities.Customers,
-                    (d, c) =>
-                        new
-                        {
-                            d = d,
-                            c = c
-                        }
-                )
-                .SelectMany(
-                    temp0 => entities.Payments,
-                    (temp0, p) =>
-                        new
-                        {
-                            temp0 = temp0,
-                            p = p
-                        }
-                )
-                .SelectMany(
-                    temp1 => entities.Staffs,
-                    (temp1, s) =>
-                        new
-                        {
-                            temp1 = temp1,
-                            s = s
-                        }
-                )
-                .Where(
-                    temp2 =>
-                        ((((Int32?)(temp2.s.id) == temp2.temp1.temp0.d.staffId) &&
-                          (temp2.temp1.temp0.d.paymentId == (Int32?)(temp2.temp1.p.id))
-                         ) &&
-                         (temp2.temp1.p.customerId == (Int32?)(temp2.temp1.temp0.c.id))
-                         && (temp2.temp1.p.customerId== id)
-                        )
-                )
-                .Select(
-                    temp2 =>
-                        new Staff
-                        {
-                            id = temp2.s.id,
-                            staffEmail = temp2.s.staffEmail,
-                            staffPhone = temp2.s.staffPhone,
-                            staffName = temp2.s.staffName,
-                            staffBirtday = temp2.s.staffBirtday,
-                            department = temp2.s.department,
-                            mistakeCount = temp2.s.mistakeCount,
-                            bankCard = temp2.s.bankCard,
-                            status_ = temp2.s.status_
-                        }
-                )
-                .Distinct();
-            return q.ToList();
+            return entities.Staffs.Where(s=>s.department.Equals("Staff")).ToList();
         }
         public List<Detail> GetAllDetailsHasPaging(int id,int page)
         {
             var q = GetAllDetail(id);
-            PagedList<Detail> model = new PagedList<Detail>(q.ToList(),page,Constant.PAGESIZEDEFAULT);
+            PagedList<Detail> model = new PagedList<Detail>(q.ToList(),page+1,Constant.PAGESIZETABLE);
             
             return model.ToList();
         }
@@ -167,7 +220,7 @@ namespace Server.Models.DAO
         public List<Payment> GetAllPaymentHasPaging(int id, int page)
         {
             var q = GetAllPayment(id);
-            PagedList<Payment> model = new PagedList<Payment>(q.ToList(), page, Constant.PAGESIZEDEFAULT);
+            PagedList<Payment> model = new PagedList<Payment>(q.ToList(), page+1, Constant.PAGESIZETABLE);
             return model.ToList();
         }
         public int CountPayment(int id)
@@ -178,7 +231,7 @@ namespace Server.Models.DAO
         public List<Staff> GetAllStaffHasPaging(int id,int page)
         {
             var q = GetAllStaff(id);
-            PagedList<Staff> model = new PagedList<Staff>(q.ToList(),page,Constant.PAGESIZEDEFAULT);
+            PagedList<Staff> model = new PagedList<Staff>(q.ToList(),page+1,Constant.PAGESIZEDEFAULT);
             return model.ToList();
         }
         public int CountStaff(int id)

@@ -1,0 +1,33 @@
+﻿@model System.Collections.Generic.List<Client.Models.DB.Payment>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr class="table-secondary">
+                    <th>No.</th>
+                    <th>idStaff</th>
+
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.paymentId</td>
+                            <td>@item.totalMoney</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>You don't have order with us. <a href="../">Let make it's</a> </tr>
+                }
+            </tbody>
+        </table>
+    </div>

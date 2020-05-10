@@ -11,20 +11,20 @@ namespace Server.Models.DAO
     public class DetailPaymentDAO
     {
         private ExcellonEntities entities=new ExcellonEntities();
-        public bool CreateOrder(DetailPayment detailPayment)
+        public Payment CreatePayments(Payment payment)
         {
-            try
+            entities.Payments.Add(payment);
+            entities.SaveChanges();
+            return payment;
+        }
+        public List<Detail> CreateDetail(List<Detail> lsDetail)
+        {
+            foreach (var item in lsDetail)
             {
-                entities.Payments.Add(detailPayment.payment);
+                entities.Details.Add(item);
                 entities.SaveChanges();
-                entities.Details.Add(detailPayment.details);
-                entities.SaveChanges();
-                return true;
             }
-            catch (Exception e)
-            {
-                return false;
-            }
+            return lsDetail;
         }
         public void UpdateDetailStaff(Detail detail)
         {

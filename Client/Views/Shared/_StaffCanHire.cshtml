@@ -1,0 +1,86 @@
+﻿@using Client.Common
+@using Client.Models.DB
+@model IEnumerable<Client.Models.DTO.AccountStaff>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="w3-col m4 w3-margin-bottom">
+            <div class="w3-light-grey">
+                <img src="@Url.Content(item.imgs[0].path_)" alt="John" style="width: 100%">
+
+                <div class="w3-container">
+                    <h3>@item.staff.staffName</h3>
+                    <p class="w3-opacity">@item.staff.department</p>
+                    <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
+                        Pick me
+                    </button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <!-- Huy UPD STT -->
+                                    <!-- <h5 class="modal-title" id="exampleModalLabel">Success!</h5> -->
+                                    <h5 class="modal-title" id="exampleModalLabel">Choose date hiring!</h5>
+                                    <!-- Huy UPD END -->
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Huy UPD STT -->
+                                    <!--We send your Request to Tâm Tâm. She will answer you soon.-->
+                                    <!--Have a nice day!-->
+
+                                    <div class="float-left">
+                                        <p>Start day:</p>
+                                        <input type="date" id="inpDateStt" onchange="changeDateFormat()" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                        <br />
+                                        <p>End day:</p>
+                                        <input type="date" id="inpDateEnd" onchange="changeDateFormat()" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                    </div>
+                                    <div class="float-right">
+                                        <table>
+                                            <tr>
+                                                <td>Service:</td>
+                                                <td>
+                                                    <select data-val="true" data-val-required="The EnumCountry field is required."
+                                                            id="idCat" name="idCat" onchange="changeDateFormat();">
+                                                        @foreach (Service_ c in item.services)
+                                                        {
+                                                            <option value=@ListServices.GetKey(@c.serviceName)>@c.serviceName</option>
+                                                        }
+                                                    </select>
+                                                </td>
+                                                <td>USD</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Day hiring:</td>
+                                                <td id="Difference_In_Days">1</td>
+                                                <td>Days</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total:</td>
+                                                <td id="subTotal">4500</td>
+                                                <td>USD</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <!-- Huy UPD END -->
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Huy ADD STT -->
+                                    <button type="button" class="btn btn-primary" onclick="addToCart(@item.staff.id)">Add To Cart</button>
+                                    <!-- Huy ADD END -->
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+}

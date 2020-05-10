@@ -15,10 +15,16 @@ namespace Server.Controllers
     {
         DetailPaymentDAO detailPaymentDao = new DetailPaymentDAO();
         [HttpPost]
-        [Route("createOrder/")]
-        public IHttpActionResult createOrder([FromBody] DetailPayment detailPayment)
+        [Route("createPayment/")]
+        public IHttpActionResult createPayment([FromBody] Payment payment)
         {
-            return Ok(detailPaymentDao.CreateOrder(detailPayment));
+            return Ok(detailPaymentDao.CreatePayments(payment));
+        }
+        [HttpPost]
+        [Route("createDetail/")]
+        public IHttpActionResult createOrder([FromBody] List<Detail> detail)
+        {
+            return Ok(detailPaymentDao.CreateDetail(detail));
         }
         [HttpPut]
         [Route("updateDetail/")]

@@ -21,12 +21,12 @@ namespace Client.Controllers
         {
             var info = Request.Cookies["Account"] ;
             if (info != null) { 
-            var accountStaff= JsonConvert.DeserializeObject<AccountStaff>(info.Value);
-            var lsDetail = GetDetailPayments(accountStaff.account.id);
-            ViewBag.Staff = accountStaff;
-            ViewBag.Model = lsDetail.Where(a=>a.details.statusOrder==STATUS_DEFAULT);
-            ViewBag.TotalMoney= lsDetail.Where(a=>a.details.statusOrder==STATUS_ACCEPT).Sum(a=>a.details.amountMoney);
-            return View();
+                var accountStaff= JsonConvert.DeserializeObject<AccountStaff>(info.Value);
+                var lsDetail = GetDetailPayments(accountStaff.account.id);
+                ViewBag.Staff = accountStaff;
+                ViewBag.Model = lsDetail.Where(a=>a.details.statusOrder==STATUS_DEFAULT);
+                ViewBag.TotalMoney= lsDetail.Where(a=>a.details.statusOrder==STATUS_ACCEPT).Sum(a=>a.details.amountMoney);
+                return View();
             }
             return Redirect("/Home/");
         }
@@ -34,9 +34,9 @@ namespace Client.Controllers
         public async Task<ActionResult> AcceptReplyCustomer(int detail)
         {
             var accountSaff = JsonConvert.DeserializeObject<AccountStaff>(Request.Cookies["Account"]?.Value);
-            var update = accountSaff.details.Find(s => s.id == detail);
-            update.statusOrder = 1;
-            var updateDetail = UpdateDetail(update);
+            var update = GetDetailPayments(accountSaff.id).Find(s => s.details.id == detail);
+            update.details.statusOrder = 1;
+            var updateDetail = UpdateDetail(update.details);
             return View("Index");
         }
         [HttpGet]

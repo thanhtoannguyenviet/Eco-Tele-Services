@@ -112,3 +112,26 @@ function CheckInfo(element, type) {
         element.classList.add('border border-success');
     }
 }
+function changeDateF() {
+    var dateStt = new Date(document.getElementById("inpDateStt").value);
+    var dateEnd = new Date(document.getElementById("inpDateEnd").value);
+    var e = document.getElementById("idCat");
+    var opt = e.options[e.selectedIndex].value;
+    var Difference_In_Time = dateEnd.getTime() - dateStt.getTime();
+    var Difference_In_Days = (Difference_In_Time / (1000 * 3600 * 24)) + 1;
+    if (!isNaN(Difference_In_Days)) {
+        document.getElementById("Difference_In_Days").innerHTML = Difference_In_Days;
+        document.getElementById("subTotal").innerHTML = Difference_In_Days * opt;
+    }
+}
+function addToCarts(id) {
+    var dateStt = document.getElementById("inpDateStt").value;
+    var dateEnd = document.getElementById("inpDateEnd").value;
+    if (dateStt > dateEnd) {
+        alert("Date end must be equal or greater than date start");
+    } else {
+        location.href = '/Customer/AddToCart?staffId=' + id + '&dateSTT=' + dateStt +
+            '&dateEND=' + dateEnd +
+            '&amountMoney=' + document.getElementById("subTotal").textContent;
+    }
+}

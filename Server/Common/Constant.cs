@@ -12,6 +12,7 @@ namespace Server.Common
         public static string CUSTOMERTABLE = "Customer";
         public static string STAFFTABLE = "Staff";
         public static int PAGESIZEDEFAULT = 3;
+        public static int PAGESIZETABLE = 10;
 
     }
 }

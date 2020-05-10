@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -8,6 +9,7 @@ using System.Web.Security;
 using Client.Models;
 using Client.Service;
 using static Client.Service.LoginService;
+using static Client.Service.YoutubeService;
 namespace Client.Controllers
 {
     public class HomeController : Controller
@@ -37,7 +39,7 @@ namespace Client.Controllers
                 {
                     var customer = LoginCustomer(person);
                     customer.account = person;
-                    new HttpCookie("Account",new JavaScriptSerializer().Serialize(customer));
+                    Response.Cookies.Add(new HttpCookie("Account",new JavaScriptSerializer().Serialize(customer)));
                     ViewBag.Name = customer.customer.headName;
                     var username = Common.ROLE.GetValue(person.role_);
                     FormsAuthentication.SetAuthCookie(Common.ROLE.GetValue(person.role_), true);
@@ -71,6 +73,18 @@ namespace Client.Controllers
             }
             Request.Cookies.Clear();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult YoutubeTask()
+        {
+            
+            return View();
+        }
+        [HttpPost]
+        public ActionResult YoutubeTask(HttpPostedFileBase videofile)
+        {
+            YoutubeService tk = new YoutubeService();
+            return Json(tk.UploadVideo(videofile), JsonRequestBehavior.AllowGet);
         }
     }
 }

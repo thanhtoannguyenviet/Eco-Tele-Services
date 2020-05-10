@@ -15,19 +15,36 @@ namespace Server.Models.DAO
         private List<Detail>GetDetailOfPayment(int id)
         {
            var q= entities.Details.SelectMany(d => entities.Payments, (d, p) => new {d, p})
-               .Where(@t => @t.d.paymentId == @t.p.id && @t.p.customerId == id)
-               .Select(@t => new Detail()
+               .SelectMany(@t => entities.Customers, (@t, c) => new {@t, c})
+               .Where(@t => @t.c.id == @t.@t.p.customerId && @t.@t.d.paymentId == @t.@t.p.id && @t.c.id == id)
+               .Select(@t => new
                {
-                   id = @t.d.id,
-                   staffId = @t.d.staffId,
-                   startDate = @t.d.startDate,
-                   endDate = @t.d.endDate,
-                   amountMoney = @t.d.amountMoney,
-                   statusOrder = @t.d.statusOrder,
-                   createDate = @t.d.createDate,
-                   paymentId = @t.d.paymentId
+                   id = @t.@t.d.id,
+                   staffId = @t.@t.d.staffId,
+                   startDate = @t.@t.d.startDate,
+                   endDate = @t.@t.d.endDate,
+                   amountMoney = @t.@t.d.amountMoney,
+                   statusOrder = @t.@t.d.statusOrder,
+                   createDate = @t.@t.d.createDate,
+                   paymentId = @t.@t.d.paymentId
                });
-            return  q.ToList();
+            var ls = new List<Detail>();
+            foreach (var item in q)
+            {
+                var detail = new Detail()
+                {
+                    id = item.id,
+                    paymentId = item.paymentId,
+                    amountMoney = item.amountMoney, 
+                    createDate = item.createDate,
+                    endDate = item.endDate,
+                    staffId = item.staffId,
+                    startDate = item.startDate,
+                    statusOrder = item.statusOrder
+                };
+                ls.Add(detail);
+            }
+            return ls;
         }
         public AccountDTO Find(string username)
         {

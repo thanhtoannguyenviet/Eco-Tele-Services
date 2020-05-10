@@ -1,16 +1,93 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@using Client.Common
+@using Client.Models.DB
+@model IEnumerable<Client.Models.DTO.AccountStaff>
+<div class="col container">
+    <div  id="Content">
 
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <div class="m4 card col-4 float-left">
+                    <div class="">
+                        
+                        <img src="@Url.Content(item.imgs[0].path_)" alt="@item.imgs[0].path_" class="card-img-top">
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
+                        <div class="card-body">
+                            <h3 class="card-title ">@item.staff.staffName</h3>
+                            <p class="card-subtitle">@item.staff.department</p>
+                            <p class="card-text">Chúng tôi sẻ phục vụ hết mình .</p>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
+                                Pick me
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <!-- Huy UPD STT -->
+                                            <!-- <h5 class="modal-title" id="exampleModalLabel">Success!</h5> -->
+                                            <h5 class="modal-title" id="exampleModalLabel">Choose date hiring!</h5>
+                                            <!-- Huy UPD END -->
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Huy UPD STT -->
+                                            <!--We send your Request to Tâm Tâm. She will answer you soon.-->
+                                            <!--Have a nice day!-->
+
+                                            <div class="float-left">
+                                                <p>Start day:</p>
+                                                <input type="date" id="inpDateStt" onchange="changeDateF()" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+                                                <br/>
+                                                <p>End day:</p>
+                                                <input type="date" id="inpDateEnd" onchange="changeDateF()" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+                                            </div>
+                                            <div class="float-right">
+                                                <table>
+                                                    <tr>
+                                                        <td>Service:</td>
+                                                        <td>
+                                                            <select data-val="true" data-val-required="The EnumCountry field is required."
+                                                                    id="idCat" name="idCat" onchange="changeDateF()">
+                                                                @foreach (Service_ c in item.services)
+                                                                {
+                                                                    <option value=@ListServices.GetKey(@c.serviceName)>@c.serviceName</option>
+                                                                }
+                                                            </select>
+                                                        </td>
+                                                        <td>USD</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Day hiring:</td>
+                                                        <td id="Difference_In_Days">1</td>
+                                                        <td>Days</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total:</td>
+                                                        <td id="subTotal">4500</td>
+                                                        <td>USD</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <!-- Huy UPD END -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <!-- Huy ADD STT -->
+                                            <button type="button" class="btn btn-primary" onclick="addToCarts(@item.staff.id)">Add To Cart</button>
+                                            <!-- Huy ADD END -->
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    @Ajax.ActionLink("Xem Thêm","LazyLoad",new { page = Session["CountPage"] },new AjaxOptions{InsertionMode = InsertionMode.InsertAfter,UpdateTargetId = "Content",HttpMethod = "POST"}, new {@class="btn btn-primary"})
 </div>
-</body>
-</html>
