@@ -1,0 +1,48 @@
+﻿@using Client.Common
+@using Client.Models.DB
+@model IEnumerable<Client.Models.DTO.VideoItem>
+
+@{
+    ViewBag.Title = "YoutubeView";
+}
+    <div class="col">
+        <h2>YoutubeView</h2>
+
+        <p>
+            @Html.ActionLink("Create New", "YoutubeCreate", "Admin", new { @class= "btn btn-dark"})
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Video")
+                </th>
+                <th>
+                    @Html.DisplayName("Title")
+                </th>
+                <th>
+                    @Html.DisplayName("Desception")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <section id="video">
+                            <iframe class="video-fr" src="@Url.Content(item.url)" alt="@item.url"
+                                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
+                            </iframe>
+                        </section>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.descreption)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>

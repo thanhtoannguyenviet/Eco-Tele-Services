@@ -11,7 +11,11 @@ using Client.Models.DTO;
 using Newtonsoft.Json;
 using static Client.Service.StaffService;
 using static Client.Service.ImageService;
+using static Client.Service.VideoService;
 using static Client.Common.CODESTATUS;
+using Client.Service;
+using System.IO;
+
 namespace Client.Controllers
 {
     public class AdminController : Controller
@@ -37,7 +41,7 @@ namespace Client.Controllers
             var update = GetDetailPayments(accountSaff.id).Find(s => s.details.id == detail);
             update.details.statusOrder = 1;
             var updateDetail = UpdateDetail(update.details);
-            return View("Index");
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public async Task<ActionResult> DenyReplyCustomer(int detail)
@@ -46,7 +50,7 @@ namespace Client.Controllers
             var update = accountSaff.details.Find(s => s.id == detail);
             update.statusOrder = -1;
             var updateDetail = UpdateDetail(update);
-            return View("Index");
+            return RedirectToAction("Index");
         }
         public async Task<ActionResult> SettingView()
         {
@@ -169,6 +173,60 @@ namespace Client.Controllers
             if(!String.IsNullOrEmpty(txtSearch))
                 lsAccount =lsAccount.Where(s=>s.staff.staffName.ToUpper().Contains(txtSearch.ToUpper())).ToList();
             return PartialView("_AccountSearch",lsAccount);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Video(string VideoFile)
+        {
+            var youtubeVideo = VideoFile;
+            var accountSaff = JsonConvert.DeserializeObject<AccountStaff>(Request.Cookies["Account"]?.Value);
+            accountSaff.vids[0].path_ = youtubeVideo;
+            UpdateVid(accountSaff.vids[0]);
+            Response.Cookies.Add(new HttpCookie("Account", new JavaScriptSerializer().Serialize(accountSaff)));
+            return RedirectToAction("SettingView");
+           
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpLoadYoutubeVideoAsync(VideoItem videoItem)
+        {
+           
+            var newUrl = "https://www.youtube.com/embed/{0}";
+            string videoId = "";
+            HttpPostedFileBase videofile = Request.Files[0];
+           YoutubeService tk = new YoutubeService();
+            try
+            {
+               videoId = await tk.UploadVideo(videofile,videoItem);
+            } catch (Exception ex)
+            {
+                var a = ex;
+            }
+            return View("Youtube");
+        }
+        public async Task<ActionResult> Youtube()
+        {
+            List<VideoItem> videoItems = new List<VideoItem>();
+            YoutubeService tk = new YoutubeService();
+            videoItems = await tk.GetListVids();
+            return View("Youtube", videoItems);
+        }
+
+        [HttpGet]
+        public ActionResult YoutubeView()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult YoutubeCreate()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult YoutubeUpload(HttpPostedFileBase videofile, VideoItem video)
+        {
+            YoutubeService tk = new YoutubeService();
+            return Json(tk.UploadVideo(videofile,video), JsonRequestBehavior.AllowGet);
         }
     }
 }

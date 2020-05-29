@@ -16,6 +16,7 @@ using PayPal.Api;
 using static Client.Service.CustomerService;
 using static Client.Service.PaymentDetailService;
 using static Client.Service.ImageService;
+using static Client.Service.VideoService;
 using Payment = Client.Models.DB.Payment;
 
 namespace Client.Controllers
@@ -39,7 +40,10 @@ namespace Client.Controllers
                 {
                     staff = item,
                     services = GetServiceByIdStaff(item.id),
-                    imgs = GetImageById(item.id)
+                    imgs = GetImageById(item.id),
+                    vids=GetVideoById(item.id)
+                    
+                    
                 };
                 lsAccountStaff.Add(accountStaff);
             }
@@ -57,7 +61,8 @@ namespace Client.Controllers
                 {
                     staff = item,
                     services = GetServiceByIdStaff(item.id),
-                    imgs = GetImageById(item.id)
+                    imgs = GetImageById(item.id),
+                    vids=GetVideoById(item.id)
                 };
                 lsAccountStaff.Add(accountStaff);
             }

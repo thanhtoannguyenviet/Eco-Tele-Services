@@ -66,54 +66,67 @@
     </div>
 </div>
 <div id="resigter">
-    <div id="tablesign" class="animate">
-        <div id="tablereg">
-            <div id="smalltablereg">Register <span onclick="document.getElementById('resigter').style.display = 'none'" class="close" title="Exit">&times;</span></div>
+    <div class="animate card text-center container none-padding">
+        <div class="card-header">
+            Register
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="document.getElementById('resigter').style.display = 'none'"  title="Exit">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-        <div id="smalltablesign">
+        <div class="col-md-10 col-lg-10 block-contact container ">
             @using (Html.BeginForm("Register", "Home", FormMethod.Post))
             {
-
+        <div class="row">
+            <div class="col">
                 <div class="form-group">
                     <label for="Fullname">Full name</label>
                     <input type="text" class="form-control" name="Fullname" id="Fullname" aria-describedby="emailHelp" placeholder="Enter fullname">
                 </div>
                 <div class="form-group">
-                    <label for="Email">Email address</label>
-                    <input type="email" class="form-control" name="Email" id="Email" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div class="form-group">
                     <label for="Username">Username:</label>
                     <input type="text" class="form-control" name="Username" id="Username" placeholder="Enter Username">
                 </div>
+            </div>
+            <div class="col">
                 <div class="form-group">
-                    <label for="Password">Password</label>
-                    <input type="password" class="form-control" name="Password" id="Password" placeholder="Enter password">
+                    <label for="Email">Email address</label>
+                    <input type="email" class="form-control" name="Email" id="Email" aria-describedby="emailHelp" placeholder="We'll never share your email with anyone else.">
                 </div>
-                <div class="form-group">
-                    <label for="Confpassword">Confirm Password</label>
-                    <input type="password" class="form-control" name="Confpassword" id="Confpassword" placeholder="Enter password" onkeypress="CheckInfo(this, 'Confpassword')">
-                </div>
-
-                <div class="form-group">
-                    <label for="Phone">Phone:</label>
-                    <input type="text" class="form-control" name="Phone" id="Phone" pattern="^([0-9])" placeholder="Enter password again" onkeypress="CheckInfo(this, 'phone')">
-                </div>
-
-                <div class="form-group">
-                    <label for="Birthday">Birthday:</label>
-                    <input type="text" class="form-control" name="Birthday" id="Birthday" placeholder="Enter password again">
-                </div>
-
                 <div class="form-group">
                     <label for="taxCode">Tax Code:</label>
                     <input type="text" class="form-control" name="taxCode" id="taxCode" placeholder="Enter Tax Code">
                 </div>
-                <input type="submit" value="Registe" class="btn btn-default"/>
-            }
-        </div>
-    </div></div>
+            </div>
+        </div>          
+        <br />
+                                                      <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group ">
+                                                                    <label for="Password">Password</label>
+                                                                    <input type="password" class="form-control" name="Password" id="Password" placeholder="Enter password">
+                                                                </div>
+                                                                <div class="form-group ">
+                                                                    <label for="Confpassword">Confirm Password</label>
+                                                                    <input type="password" class="form-control" name="Confpassword" id="Confpassword" placeholder="Enter password" onkeypress="CheckInfo(this, 'Confpassword')">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="form-group ">
+                                                                    <label for="Phone">Phone:</label>
+                                                                    <input type="text" class="form-control" name="Phone" id="Phone" pattern="^([0-9])" placeholder="Enter password again" onkeypress="CheckInfo(this, 'phone')">
+                                                                </div>
+
+                                                                <div class="form-group ">
+                                                                    <label for="Birthday">Birthday:</label>
+                                                                    <input type="date" class="form-control" name="Birthday" id="Birthday" placeholder="dd/MM/yyyy">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    <br />
+                                                                                        <input type="submit" value="Registe" class="btn btn-primary btn-lg btn-block" />}
+        <br />    </div>
+                                                                    </div>
+</div>
 <div class="navbar  bg-dark text-light ">
     <div class="container">
         <div class="navbar-header">

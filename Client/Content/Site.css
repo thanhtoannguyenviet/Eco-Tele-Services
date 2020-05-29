@@ -140,3 +140,13 @@ footer {
     left: 0;
     right: 0;
 }
+
+.fixed-height {
+    height: 194px;
+}
+
+.video-fr {
+    width: 100%;
+    min-height: 194px;
+    margin-top: 20px;
+}

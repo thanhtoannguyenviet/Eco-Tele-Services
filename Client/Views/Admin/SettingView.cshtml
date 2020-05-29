@@ -68,33 +68,32 @@
                         <div class="card-body">
                             @using (Html.BeginForm("ChangePassword", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
-                            <div class="card-body">
+                                <div class="card-body">
 
-                                <div class="form-group">
-                                    <label for="Confpassword">Old Password</label>
-                                    <input type="password" class="form-control" name="Oldpassword" id="Oldpassword" placeholder="Enter password">
-                                </div>
+                                    <div class="form-group">
+                                        <label for="Confpassword">Old Password</label>
+                                        <input type="password" class="form-control" name="Oldpassword" id="Oldpassword" placeholder="Enter password">
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="Confpassword">Password</label>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter password">
-                                </div>   
-                                <div class="form-group">
-                                    <label for="Confpassword">Confirm Password</label>
-                                    <input type="password" class="form-control" name="Confpassword" id="Confpassword" placeholder="Re-enter password">
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <input type="submit" value="Submit" class="btn btn-outline-primary" />
+                                    <div class="form-group">
+                                        <label for="Confpassword">Password</label>
+                                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Confpassword">Confirm Password</label>
+                                        <input type="password" class="form-control" name="Confpassword" id="Confpassword" placeholder="Re-enter password">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Submit" class="btn btn-outline-primary" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             }
                         </div>
                     </div>
                 </div>
-
-                <div class="card">
+<div class="card">
                     <div class="card-header" id="headingThree">
                         <h2 class="mb-0">
                             <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -126,7 +125,7 @@
                         }
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
+</div>
+

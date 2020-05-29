@@ -77,6 +77,7 @@ namespace Server.Models.DAO
             accountStaff.account = account;
             accountStaff.staff = entities.Staffs.Find(account.id);
             accountStaff.imgs= entities.Imgs.Where(a=>a.entryId==account.id&&a.entryName==Constant.STAFFTABLE).ToList();
+            accountStaff.vids = entities.Vids.Where(a => a.entryId == account.id).ToList();
             accountStaff.services=entities.Service_.Where(a=>a.staffId==account.id).ToList();
             accountStaff.details=entities.Details.Where(a=>a.staffId==account.id).ToList();
             return accountStaff;

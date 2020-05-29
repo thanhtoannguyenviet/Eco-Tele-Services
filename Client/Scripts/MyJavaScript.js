@@ -135,3 +135,7 @@ function addToCarts(id) {
             '&amountMoney=' + document.getElementById("subTotal").textContent;
     }
 }
+
+function changeVideo(input) {
+   
+}

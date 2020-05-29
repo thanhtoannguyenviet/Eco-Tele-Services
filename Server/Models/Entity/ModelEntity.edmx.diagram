@@ -12,8 +12,8 @@
         <EntityTypeShape EntityType="ExcellonModel.Payment" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ExcellonModel.Service_" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ExcellonModel.Staff" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExcellonModel.sysdiagram" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExcellonModel.Temp" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExcellonModel.Data" Width="1.5" PointX="3.375" PointY="7.75" />
+        <EntityTypeShape EntityType="ExcellonModel.Vid" Width="1.5" PointX="0.75" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

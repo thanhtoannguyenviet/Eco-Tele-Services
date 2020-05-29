@@ -2,12 +2,12 @@
 @using Client.Models.DTO
 @using Newtonsoft.Json
 @{
-    var info = JsonConvert.DeserializeObject<AccountCustomer>(Request.Cookies["Account"]?.Value);
+    var info = JsonConvert.DeserializeObject<AccountStaff>(Request.Cookies["Account"]?.Value);
 }
 <nav class="col-md-2 d-none d-md-block bg-light border-nav" style="height: 572px">
     <div class="text-center">
-        <img src="@info.img.path_" class=" img-fluid" alt="..." style="padding: 30px 0px 0px 10px;">
-        <h4 >@info.customer.headName</h4>
+        <img src="@info.imgs[0].path_" class=" img-fluid" alt="..." style="padding: 30px 0px 0px 10px;">
+        <h4 >@info.staff.staffName</h4>
     </div>
     <ul class="nav flex-column">
         <li class="nav-item ">
@@ -21,6 +21,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link text-center @(ViewContext.RouteData.Values["Action"].ToString() == "Service" ? "text-primary" : "")" href="@Url.Action("Service","Admin")"><i class="fa fa-briefcase fa-fw"></i> Service</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-center @(ViewContext.RouteData.Values["Action"].ToString()=="Youtube" ? "text-primary" : "")" href="@Url.Action("Youtube", "Admin")"><i class="fa fa-youtube fa-fw"></i> Youtube</a>   
         </li>
         <li class="nav-item">
             <a class="nav-link text-center" href="@Url.Action("LogOut","Home")"><i class="fa fa-power-off"></i> Log out</a>

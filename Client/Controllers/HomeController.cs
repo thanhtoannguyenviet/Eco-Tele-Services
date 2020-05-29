@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -9,7 +6,7 @@ using System.Web.Security;
 using Client.Models;
 using Client.Service;
 using static Client.Service.LoginService;
-using static Client.Service.YoutubeService;
+
 namespace Client.Controllers
 {
     public class HomeController : Controller
@@ -20,7 +17,7 @@ namespace Client.Controllers
         }
 
         public ActionResult Contact()
-        {
+        { 
             ViewBag.Message = "Your contact page.";
 
             return View();
@@ -80,11 +77,11 @@ namespace Client.Controllers
             
             return View();
         }
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult YoutubeTask(HttpPostedFileBase videofile)
         {
             YoutubeService tk = new YoutubeService();
             return Json(tk.UploadVideo(videofile), JsonRequestBehavior.AllowGet);
-        }
+        }*/
     }
 }
