@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
 using Client.Models.DB;
@@ -78,7 +79,7 @@ namespace Client.Service
             }
             return null;
         }
-        public static List<DetailPayment> GetDetailPayments(int staffid)
+        public static async Task<List<DetailPayment>> GetDetailPayments(int staffid)
         {
             using (var client = new HttpClient())
             {

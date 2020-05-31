@@ -13,8 +13,8 @@ namespace Client.Common
             {75,"HR"},
             {50,"KeToan"},//chua lam gi, doi sang tieng anh
             {25,"Trainer"},
-            {20,"NhanVien"},
-            {1,"Customer" }
+            {20,"Staff"},
+            {1,"Customer"}
         };
         public static string GetValue(int? TKey)
         {

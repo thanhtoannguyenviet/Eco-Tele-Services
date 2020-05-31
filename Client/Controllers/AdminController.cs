@@ -26,7 +26,7 @@ namespace Client.Controllers
             var info = Request.Cookies["Account"] ;
             if (info != null) { 
                 var accountStaff= JsonConvert.DeserializeObject<AccountStaff>(info.Value);
-                var lsDetail = GetDetailPayments(accountStaff.account.id);
+                var lsDetail =  await GetDetailPayments(accountStaff.account.id);
                 ViewBag.Staff = accountStaff;
                 ViewBag.Model = lsDetail.Where(a=>a.details.statusOrder==STATUS_DEFAULT);
                 ViewBag.TotalMoney= lsDetail.Where(a=>a.details.statusOrder==STATUS_ACCEPT).Sum(a=>a.details.amountMoney);
@@ -34,13 +34,27 @@ namespace Client.Controllers
             }
             return Redirect("/Home/");
         }
+        public async Task<ActionResult> OrderAccept()
+        {
+            var info = Request.Cookies["Account"];
+            if (info != null)
+            {
+            var accountStaff = JsonConvert.DeserializeObject<AccountStaff>(info.Value);
+            var lsDetail = await GetDetailPayments(accountStaff.account.id);
+            ViewBag.Staff = accountStaff;
+            ViewBag.Model = lsDetail.Where(a => a.details.statusOrder == STATUS_DEFAULT);
+            }
+            return PartialView("_OrderAccept");
+             
+        }
         [HttpGet]
         public async Task<ActionResult> AcceptReplyCustomer(int detail)
         {
             var accountSaff = JsonConvert.DeserializeObject<AccountStaff>(Request.Cookies["Account"]?.Value);
-            var update = GetDetailPayments(accountSaff.id).Find(s => s.details.id == detail);
-            update.details.statusOrder = 1;
-            var updateDetail = UpdateDetail(update.details);
+            var update = await GetDetailPayments(accountSaff.id);
+            var finder =update.Find(s => s.details.id == detail);
+            finder.details.statusOrder = 1;
+            var updateDetail = UpdateDetail(finder.details);
             return RedirectToAction("Index");
         }
         [HttpGet]
@@ -116,7 +130,7 @@ namespace Client.Controllers
             return View(accountStaff);
         }
         [HttpPost]
-        public async Task<ActionResult> SettingServiceDetail(FormCollection form)
+        public ActionResult SettingServiceDetail(FormCollection form)
         {
             string[] strArray= new []{ form["inbound"] , form["outbound"], form["telemarketing"] };
             var accountStaff = Session["AccountStaff"] as AccountStaff;
@@ -176,7 +190,7 @@ namespace Client.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Video(string VideoFile)
+        public ActionResult Video(string VideoFile)
         {
             var youtubeVideo = VideoFile;
             var accountSaff = JsonConvert.DeserializeObject<AccountStaff>(Request.Cookies["Account"]?.Value);
@@ -192,7 +206,7 @@ namespace Client.Controllers
         {
            
             var newUrl = "https://www.youtube.com/embed/{0}";
-            string videoId = "";
+            string videoId = String.Empty ;
             HttpPostedFileBase videofile = Request.Files[0];
            YoutubeService tk = new YoutubeService();
             try
@@ -202,14 +216,15 @@ namespace Client.Controllers
             {
                 var a = ex;
             }
-            return View("Youtube");
+            return RedirectToAction("Youtube");
         }
+        
         public async Task<ActionResult> Youtube()
         {
-            List<VideoItem> videoItems = new List<VideoItem>();
+            
             YoutubeService tk = new YoutubeService();
-            videoItems = await tk.GetListVids();
-            return View("Youtube", videoItems);
+            var videoItems = await tk.GetListVids();
+            return View(videoItems);
         }
 
         [HttpGet]

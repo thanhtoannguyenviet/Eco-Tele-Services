@@ -433,6 +433,7 @@
     <Content Include="Views\Customer\Bill.cshtml" />
     <Content Include="Views\Admin\Youtube.cshtml" />
     <Content Include="Views\Admin\YoutubeCreate.cshtml" />
+    <Content Include="Views\Shared\_OrderAccept.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
