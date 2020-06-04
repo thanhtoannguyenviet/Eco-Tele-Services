@@ -49,6 +49,49 @@ namespace Client.Controllers
             }
             return View(lsAccountStaff);
         }
+        public ActionResult SettingView()
+        {
+            var accountCustomer = JsonConvert.DeserializeObject<AccountCustomer>(Request.Cookies["Account"]?.Value);
+            return View(accountCustomer);
+        }
+        [HttpPost]
+        public ActionResult Img()
+        {
+            var accountCustomer = JsonConvert.DeserializeObject<AccountCustomer>(Request.Cookies["Account"]?.Value);
+            accountCustomer.img.path_ = Request["ImageFile"];
+            UpdateImg(accountCustomer.img);
+            return View("SettingView");
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(string password)
+        {
+            var accountCustomer = JsonConvert.DeserializeObject<AccountCustomer>(Request.Cookies["Account"]?.Value);
+            if (accountCustomer.account.pass_word == Request["Oldpassword"] && password == Request["ConfPassword"])
+            {
+                accountCustomer.account.pass_word = password;
+                var newaccountStaff = UpdateCustomer(accountCustomer);
+                if (newaccountStaff != null)
+                {
+                    return View("Index");
+                }
+                new HttpCookie("Account", new JavaScriptSerializer().Serialize(newaccountStaff));
+            }
+            return RedirectToAction("SettingView");
+        }
+        [HttpPost]
+        public ActionResult SettingView(Customer customer)
+        {
+            var accountCustomer = JsonConvert.DeserializeObject<AccountCustomer>(Request.Cookies["Account"]?.Value);
+           
+            accountCustomer.customer = customer;
+            var newaccountCustomer = UpdateCustomer(accountCustomer);
+            new HttpCookie("Account", new JavaScriptSerializer().Serialize(newaccountCustomer));
+            if (newaccountCustomer != null)
+            {
+                return View("Index");
+            }
+            return View("SettingView");
+        }
         [HttpPost]
         public ActionResult LazyLoad(int page)
         {

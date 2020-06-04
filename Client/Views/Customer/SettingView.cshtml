@@ -1,25 +1,23 @@
 ﻿@model Client.Models.AccountCustomer
 @{
     ViewBag.Title = "Setting";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<h2 class="bg-primary">Setting</h2>
 
-<div class="accordion" id="accordionExample">
-    <div class="card">
-        <div class="card-header" id="headingOne">
-            <h2 class="mb-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Change Information
-                </button>
-            </h2>
-        </div>
-
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-            @using (Html.BeginForm("SettingView", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
+<div class=" col container-fluid" style="padding-left: 0">
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Change Information
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                @using (Html.BeginForm("SettingView", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
                 <div class="card-body">
-                
+
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.customer.id)
                     <div class="form-group">
@@ -56,57 +54,67 @@
                             <input type="submit" value="Submit" class="btn btn-outline-primary" />
                         </div>
                     </div>
-                </div>}
-        </div>
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-                <h2 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Change Password
-                    </button>
-                </h2>
+                </div>
+                }
             </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div class="card-body">
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Change Password
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        @using (Html.BeginForm("ChangePassword", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="card-body">
 
-                    <div class="animate col-8 container border border-primary">
-                        <div class="form-group">
-                            <label for="Password">Password</label>
-                            <input type="password" class="form-control" id="Password" placeholder="Enter password">
-                        </div>
-                        <div class="form-group">
-                            <label for="Confpassword">Confirm Password</label>
-                            <input type="password" class="form-control" id="Confpassword" placeholder="Enter password">
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Submit" class="btn btn-outline-primary" />
+                                <div class="form-group">
+                                    <label for="Confpassword">Old Password</label>
+                                    <input type="password" class="form-control" name="Oldpassword" id="Oldpassword" placeholder="Enter password">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="Confpassword">Password</label>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Confpassword">Confirm Password</label>
+                                    <input type="password" class="form-control" name="Confpassword" id="Confpassword" placeholder="Re-enter password">
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Submit" class="btn btn-outline-primary" />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Change Image
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    @using (Html.BeginForm("Img", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="card-body">
 
-        <div class="card">
-            <div class="card-header" id="headingThree">
-                <h2 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Change Image
-                    </button>
-                </h2>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                @using (Html.BeginForm("Img", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="card-body">
-                        <div class="animate col-8 container border border-primary container-fluid">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
                                 <img src="@Url.Content(Model.img.path_)" style="width: 200px" class="rounded mx-auto d-block" id="Image" />
-                                <div class="col-md-10">
-                                    <input type="file" id="imgCat" name="ImageFile" onchange="changeImage(this)" />
+                                <div class="col-md-10 row">
+                                    <input type="file" onchange="changeImage(this)" />
+                                    <input id="urlImg" value="@Model.img.path_" type="hidden" name="ImageFile" />
+                                    <div id="loader" class="spinner-border text-primary" role="status" style="display: none">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -115,10 +123,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
-
     </div>
 </div>

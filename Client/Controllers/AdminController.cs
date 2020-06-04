@@ -66,7 +66,7 @@ namespace Client.Controllers
             var updateDetail = UpdateDetail(update);
             return RedirectToAction("Index");
         }
-        public async Task<ActionResult> SettingView()
+        public ActionResult SettingView()
         {
             var accountSaff = JsonConvert.DeserializeObject<AccountStaff>(Request.Cookies["Account"]?.Value);
             return View(accountSaff);
